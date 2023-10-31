@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 
-export default function ButtonComponent({value, placeholder, onChangeText} : {value: string, placeholder: string, onChangeText?: (text: string) => void;}) {
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChangeText?.(event.target.value);
-    };
+import React from 'react';
+
+export default function ButtonComponent({onChange, placeholder}: {onChange : (event: React.ChangeEvent<HTMLInputElement>) => void, placeholder: string}) {
 
     return (
-        <Input placeholder={placeholder} value={value} type="text" onChange={handleChange}/>
+        <Input placeholder={placeholder} type="text" onChange={onChange}/>
     )
 }
 
