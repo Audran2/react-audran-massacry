@@ -1,44 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import "../App.css";
 import InputComponent from "../components/InputComponent";
-import { creatFakeUser } from "../services/createFakeUser";
 import ListItem from "../components/ListItem";
 import styled from "@emotion/styled";
-import { User } from "../models/User";
+import { useUsers } from "../hooks/userUsers";
+import { creatFakeUser } from "../services/createFakeUser";
 
 function UserScreen() {
-
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { users, loading, deleteUser, setUsers } = useUsers();
   const [searchFilter, setSearchFilter] = useState("");
-
-  useEffect(() => {
-    setTimeout(() => {
-      const nextUsers = creatFakeUser(10);
-      setUsers(nextUsers);
-      setLoading(false);
-    }, 750);
-  }, []);
 
   const createUser = () => {
     const nextUsers = creatFakeUser(1);
     setUsers([...users, ...nextUsers]);
   };
-
-  const deleteUser = (id: number) => {
-    const nextUsers = users.filter((user) => user.id !== id);
-    setUsers(nextUsers);
-  };
-
-  // correction prof
-  const filtered = useMemo(() => {
-    if (!searchFilter) return users;
-
-    return users.filter((user) =>
-      user.name.toLowerCase().includes(searchFilter.toLowerCase())
-    );
-  }, [searchFilter, users]);
-  // correction prof
 
   return (
     <>

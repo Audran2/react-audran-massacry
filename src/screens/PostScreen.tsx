@@ -1,33 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import "../App.css";
 import InputComponent from "../components/InputComponent";
 import ListItemPosts from "../components/ListItemPosts";
 import { creatFakePosts } from "../services/createFakePosts";
-import { Post } from "../models/Post";
+import { usePosts } from "../hooks/usePosts";
 
 function PostScreen() {
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { posts, loading, deletePost, setPosts } = usePosts();
   const [searchFilter, setSearchFilter] = useState("");
 
-  useEffect(() => {
-    setTimeout(() => {
-      const newPosts = creatFakePosts(10);
-      setPosts(newPosts);
-      setLoading(false);
-    }, 750);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const newPosts = creatFakePosts(10);
+  //     setPosts(newPosts);
+  //     setLoading(false);
+  //   }, 750);
+  // }, []);
 
   const createPost = () => {
     const newPosts = creatFakePosts(1);
     setPosts([...posts, ...newPosts]);
-  };
-
-  const deletePost = (id: number) => {
-    const newPosts = posts.filter((post) => post.id !== id);
-    setPosts(newPosts);
   };
 
   return (
